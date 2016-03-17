@@ -40,6 +40,10 @@ class SimpleStore extends EventEmitter {
         this.__items = this.__items.filter(item => item.id != id)
     }
 
+    deleteAll() {
+        this.__items=[]
+    }
+
 
 }
 

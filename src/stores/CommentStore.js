@@ -1,5 +1,5 @@
 import SimpleStore from './SimpleStore'
-import { ADD_COMMENT, LOAD_COMMENTS_FOR_ARTICLE, _SUCCESS, _FAIL, _START } from '../actions/constants'
+import { ADD_COMMENT, LOAD_COMMENTS_FOR_ARTICLE, LOAD_COMMENTS_PER_PAGE, _SUCCESS, _FAIL, _START } from '../actions/constants'
 import AppDispatcher from '../dispatcher'
 
 class CommentStore extends SimpleStore {
@@ -20,12 +20,20 @@ class CommentStore extends SimpleStore {
                     response.forEach(this.add)
                     break
 
+                case LOAD_COMMENTS_PER_PAGE + _SUCCESS:
+                    this.deleteAll();
+                    this._total = response.total
+                    response.records.forEach(this.add)
+                    break
+
                 default: return
             }
 
             this.emitChange()
         })
     }
+
+    getTotal() { return this._total}
 }
 
 export default CommentStore
